@@ -12,8 +12,10 @@ export const MessageModal: React.FC<MessageModalProps> = ({
   steps,
   message,
 }) => {
+  const modalClass = steps >= avaliableSteps ? "modal_active" : "modal";
+
   return (
-    <div className={`${steps >= avaliableSteps ? "modal_active" : "modal"}`}>
+    <div className={modalClass}>
       <div className="modal-content">
         <h2>{message}</h2>
       </div>

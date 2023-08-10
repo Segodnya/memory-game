@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../Card/Card";
 import "./Cards.css";
 import imgFirebase from "../../images/firebase.svg";
@@ -90,11 +90,13 @@ export function Cards({
     } else {
       check(id);
     }
+  }
 
+  useEffect(() => {
     if (pairsCollected === 8) {
       setModalVisible({ status: true, message: "Ты - Победитель!" });
     }
-  }
+  }, [pairsCollected]);
 
   return (
     <div className="container">

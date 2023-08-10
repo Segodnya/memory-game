@@ -3,5 +3,43 @@
 }
 
 .modal_active {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 81px;
+  left: -92px;
+  width: 685px;
+  height: 371px;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 50px;
+  text-transform: uppercase;
+}
+
+.modal-content {
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+}
+
+.modal__button {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 340px;
+  height: 64px;
+  border-radius: 12px;
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 10px;
+  text-transform: uppercase;
 }

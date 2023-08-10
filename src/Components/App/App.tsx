@@ -4,7 +4,7 @@ import "./App.css";
 
 export function App() {
   const [steps, setSteps] = useState(0);
-  const avaliableSteps = 40;
+  const avaliableSteps = 4;
   const [modalVisible, setModalVisible] = useState({
     status: false,
     message: "",
@@ -12,15 +12,20 @@ export function App() {
 
   useEffect(() => {
     if (steps === 0) {
-      setModalVisible({ status: true, message: "Попытки закончились!" });
+      setModalVisible({
+        status: true,
+        message: "УВЫ, ВЫ ПРОИГРАЛИ У ВАС КОНЧИЛИСЬ ХОДЫ",
+      });
     }
   }, [steps]);
 
   return (
     <div className="App">
-      <h1 className="App__title">Memory Game - React</h1>
+      <h1 className="App__title">Memory</h1>
       <div className="App__board">
-        <div>Сделано ходов {steps}</div>
+        <div className="App__text">
+          Сделано ходов <span className="App__span">{steps}</span>
+        </div>
         <Cards
           steps={steps}
           setSteps={setSteps}
@@ -28,7 +33,10 @@ export function App() {
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
         />
-        <div>Осталось попыток {avaliableSteps - steps}</div>
+        <div className="App__text">
+          Осталось попыток{" "}
+          <span className="App__span">{avaliableSteps - steps}</span>
+        </div>
       </div>
     </div>
   );

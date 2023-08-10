@@ -18,6 +18,7 @@ export const MessageModal: React.FC<MessageModalProps> = ({
     <div className={modalClass}>
       <div className="modal-content">
         <h2>{message}</h2>
+        <button className="modal__button">СЫГРАТЬ ЕЩЕ</button>
       </div>
     </div>
   );

@@ -6,10 +6,6 @@
   --color-accent: #ff5533;
   --color-grey: #868686;
   --color-white: #ffffff;
-
-  --container-width: 1440px;
-  --grid-column-width: 98px;
-  --grid-gap: 20px;
 }
 
 * {
@@ -20,19 +16,5 @@
 body {
   font-family: "Rubik", sans-serif;
   background-color: #ffffff;
-  font-size: 22px;
-  font-weight: 400;
   color: var(--color-primary);
-}
-
-.container {
-  margin: 0 auto;
-  padding: 0 20px;
-  max-width: var(--container-width);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(12, var(--grid-column-width));
-  gap: var(--grid-gap);
 }

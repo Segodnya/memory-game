@@ -1,41 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
+import "./Card.css";
 
-interface CardProps {
-  image: string;
-  isMatched: boolean;
-  isFlipped: boolean;
-  onClick: () => void;
+interface Item {
+  id: number;
+  img: string;
+  stat: string;
 }
 
-const Card: React.FC<CardProps> = ({
-  image,
-  isMatched,
-  isFlipped,
-  onClick,
-}) => {
-  const handleClick = () => {
-    if (!isFlipped && !isMatched) {
-      onClick();
-    }
-  };
+interface CardProps {
+  item: Item;
+  id: number;
+  handleClick: (id: number) => void;
+}
+
+export function Card({ item, id, handleClick }: CardProps) {
+  const itemClass = item.stat ? " active " + item.stat : " untouched ";
 
   return (
-    <div
-      className={`card ${isFlipped ? "flipped" : ""} ${
-        isMatched ? "matched" : ""
-      }`}
-      onClick={handleClick}
-    >
-      <div className="card-inner">
-        <div className="card-front">
-          <img src="images/card-back.jpg" alt="Card Back" />
-        </div>
-        <div className="card-back">
-          <img src={image} alt="Card Image" />
-        </div>
-      </div>
+    <div className={"card" + itemClass} onClick={() => handleClick(id)}>
+      <img className="card__image" src={item.img} alt="" />
     </div>
   );
-};
-
-export default Card;
+}

@@ -1,0 +1,10 @@
+.App {
+  display: grid;
+}
+.App__title {
+}
+.App__board {
+  display: grid;
+  grid-template-columns: 193px 1fr 193px;
+  gap: 73px;
+}

@@ -44,3 +44,7 @@
   transition: 1s;
   visibility: hidden;
 }
+.card__image {
+  width: 80%;
+  height: 80%;
+}

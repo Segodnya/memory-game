@@ -1,11 +1,11 @@
-import imgFirebase from "./images/firebase.svg";
-import imgNginx from "./images/nginx.svg";
-import imgNode from "./images/node.svg";
-import imgReact from "./images/react.svg";
-import imgRedux from "./images/redux.svg";
-import imgTs from "./images/ts.svg";
-import imgWebpack from "./images/webpack.svg";
-import imgWs from "./images/ws.svg";
+import imgFirebase from "./images/firebase.png";
+import imgNginx from "./images/nginx.png";
+import imgNode from "./images/node.png";
+import imgReact from "./images/react.png";
+import imgRedux from "./images/redux.png";
+import imgTs from "./images/ts.png";
+import imgWebpack from "./images/webpack.png";
+import imgWs from "./images/ws.png";
 import { CardType } from "./types";
 
 export const INITIAL_CARDS: CardType[] = [

@@ -24,6 +24,14 @@ module.exports = {
         type: "asset/resource",
       },
       {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: "file-loader",
+          },
+        ],
+      },
+      {
         test: /\.(ts|tsx)$/,
         use: "ts-loader",
         exclude: /node_modules/,

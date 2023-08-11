@@ -26,7 +26,7 @@ export function CardComponent({
       }`}
     >
       <div className="card__front">
-        <img src={card.img} alt="card__front" />
+        <img className="card__image" src={card.img} alt="card__front" />
       </div>
       <div className="card__back">
         <img src={imgBack} alt="card__back" />

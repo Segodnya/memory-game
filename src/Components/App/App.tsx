@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CardType } from "../../types";
 import { CardComponent } from "../CardComponent/CardComponent";
 import { ModalComponent } from "../ModalComponent/ModalComponent";
-import { INITIAL_CARDS, shuffleDeck } from "../../utils";
+import { INITIAL_CARDS, changeDeclension, shuffleDeck } from "../../utils";
 import "./App.css";
 
 export function App() {
@@ -50,10 +50,11 @@ export function App() {
   }, [openCards, cards, clearTimeout, setTimeoutId]);
 
   useEffect(() => {
+    let word = changeDeclension(moves);
     TOTAL_ATTEMPTS - moves === 0 &&
       setMessage(`Увы, вы проиграли\nУ вас кончились ходы`);
     matched.length === 8 &&
-      setMessage(`Ура, вы выйграли\nЭто заняло ${moves} ходов`);
+      setMessage(`Ура, вы выйграли\nЭто заняло ${moves} ${word}`);
   }, [matched, moves]);
 
   const gameRestart = () => {

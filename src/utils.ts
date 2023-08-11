@@ -22,3 +22,18 @@ export const INITIAL_CARDS: CardType[] = [
 export function shuffleDeck(deck: CardType[]): CardType[] {
   return deck.sort(() => Math.random() - 0.5);
 }
+
+export function changeDeclension(moves: number): string {
+  let word: string;
+  switch (moves) {
+    case 22 || 23 || 24 || 32 || 33 || 34:
+      word = "ХОДА";
+      return word;
+    case 21 || 31:
+      word = "ХОД";
+      return word;
+    default:
+      word = "ХОДОВ";
+      return word;
+  }
+}

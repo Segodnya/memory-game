@@ -26,10 +26,16 @@ export function shuffleDeck(deck: CardType[]): CardType[] {
 export function changeDeclension(moves: number): string {
   let word: string;
   switch (moves) {
-    case 22 || 23 || 24 || 32 || 33 || 34:
+    case 22:
+    case 23:
+    case 24:
+    case 32:
+    case 33:
+    case 34:
       word = "ХОДА";
       return word;
-    case 21 || 31:
+    case 21:
+    case 31:
       word = "ХОД";
       return word;
     default:

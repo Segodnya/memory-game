@@ -1,72 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { CardType } from "../../types";
+import { CardComponent } from "../CardComponent/CardComponent";
+import { ModalComponent } from "../ModalComponent/ModalComponent";
+import { INITIAL_CARDS, shuffleDeck } from "../../utils";
 import "./App.css";
-import imgFirebase from "../../images/firebase.svg";
-import imgNginx from "../../images/nginx.svg";
-import imgNode from "../../images/node.svg";
-import imgReact from "../../images/react.svg";
-import imgRedux from "../../images/redux.svg";
-import imgTs from "../../images/ts.svg";
-import imgWebpack from "../../images/webpack.svg";
-import imgWs from "../../images/ws.svg";
-import imgBack from "../../images/logo.svg";
-
-export const INITIAL_CARDS: Card[] = [
-  { id: 1, img: imgFirebase, stat: "" },
-  { id: 2, img: imgNginx, stat: "" },
-  { id: 3, img: imgNode, stat: "" },
-  { id: 4, img: imgReact, stat: "" },
-  { id: 5, img: imgRedux, stat: "" },
-  { id: 6, img: imgTs, stat: "" },
-  { id: 7, img: imgWebpack, stat: "" },
-  { id: 8, img: imgWs, stat: "" },
-];
-
-interface Card {
-  id: number;
-  img: string;
-  stat: string;
-}
-
-const deck: Card[] = [...INITIAL_CARDS, ...INITIAL_CARDS];
 
 export function App() {
-  const [arrayCards, setArrayCards] = React.useState<Card[]>([]);
-  const [openCards, setOpenCards] = React.useState<number[]>([]);
-  const [matched, setMatched] = React.useState<number[]>([]);
-  const [attempts, setAttempts] = React.useState<number>(40);
-  const [moves, setMoves] = React.useState<number>(0);
+  const deck: CardType[] = [...INITIAL_CARDS, ...INITIAL_CARDS];
+  const [cards, setCards] = useState<CardType[]>([]);
+  const [openCards, setOpenCards] = useState<number[]>([]);
+  const [matched, setMatched] = useState<number[]>([]);
+  const [moves, setMoves] = useState<number>(0);
+  const [message, setMessage] = useState<string>("");
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const TOTAL_ATTEMPTS = 40;
 
-  React.useEffect(() => {
-    setArrayCards(deck.sort(() => Math.random() - 0.5));
+  useEffect(() => {
+    setCards(shuffleDeck(deck));
   }, []);
 
   const flipCard = (index: number): void => {
-    if (openCards.length > 1) return;
-    else setOpenCards((openCard) => [...openCard, index]);
+    if (TOTAL_ATTEMPTS - moves === 0 || matched.length === 8) return;
+
+    if (openCards.length > 1) {
+      clearTimeout(Number(timeoutId));
+      setOpenCards([]);
+      setOpenCards((openCard) => [...openCard, index]);
+    } else {
+      setOpenCards((openCard) => [...openCard, index]);
+    }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (openCards.length < 2) return;
 
-    const firstMatched = arrayCards[openCards[0]];
-    const secondMatched = arrayCards[openCards[1]];
+    const [firstMatched, secondMatched] = openCards.map(
+      (cardIndex) => cards[cardIndex]
+    );
+
     if (secondMatched && firstMatched.id === secondMatched.id) {
-      setMatched([...matched, firstMatched.id]);
+      setMatched((matched) => [...matched, firstMatched.id]);
     }
 
     if (openCards.length === 2) {
-      setMoves(moves + 1);
-      setAttempts(attempts - 1);
-      setTimeout(() => setOpenCards([]), 1500);
+      setMoves((moves) => moves + 1);
+      const id = setTimeout(() => setOpenCards([]), 1500);
+      setTimeoutId(id);
     }
-  }, [openCards]);
+  }, [openCards, cards, clearTimeout, setTimeoutId]);
+
+  useEffect(() => {
+    TOTAL_ATTEMPTS - moves === 0 &&
+      setMessage(`Увы, вы проиграли\nУ вас кончились ходы`);
+    matched.length === 8 &&
+      setMessage(`Ура, вы выйграли\nЭто заняло ${moves} ходов`);
+  }, [matched, moves]);
 
   const gameRestart = () => {
     setOpenCards([]);
     setMatched([]);
-    setAttempts(40);
     setMoves(0);
-    setArrayCards(deck.sort(() => Math.random() - 0.5));
+    setCards(shuffleDeck(deck));
   };
 
   return (
@@ -79,59 +73,25 @@ export function App() {
         </div>
 
         <div className="App__cards">
-          {arrayCards.map((card, index) => {
-            let isFlipped = false;
-            let isVisible = true;
-            if (openCards.includes(index)) isFlipped = true;
-            if (matched.includes(card.id)) {
-              isFlipped = true;
-              isVisible = false;
-            }
-
-            return (
-              <div
-                key={index}
-                onClick={() => flipCard(index)}
-                className={`  ${!isFlipped ? "card" : "flipped card--block"}
-                           ${!isVisible ? "card--hidden" : ""}`}
-              >
-                <div className="card-front ">
-                  <img src={card.img} width="100" alt="card-front" />
-                </div>
-                <div className="card-back ">
-                  <img src={imgBack} width="100" alt="card-back" />
-                </div>
-              </div>
-            );
-          })}
+          {cards.map((card, index) => (
+            <CardComponent
+              key={index}
+              card={card}
+              index={index}
+              openCards={openCards}
+              matched={matched}
+              flipCard={flipCard}
+            />
+          ))}
         </div>
         <div className="App__text">
-          Осталось попыток <span className="App__span">{attempts}</span>
+          Осталось попыток{" "}
+          <span className="App__span">{TOTAL_ATTEMPTS - moves}</span>
         </div>
       </main>
-      {attempts === 0 ? (
-        <div className="modal">
-          <div className="modal-content">
-            <p>Увы, вы проиграли</p>
-            <p>У вас кончились ходы</p>
-          </div>
-          <button onClick={() => gameRestart()} className="modal__button">
-            Сыграть еще
-          </button>
-        </div>
-      ) : null}
-
-      {matched.length === 8 ? (
-        <div className="modal">
-          <div className="modal-content">
-            <p>Ура, вы выйграли</p>
-            <p>{`Это заняло ${moves} ходов`}</p>
-          </div>
-          <button onClick={() => gameRestart()} className="modal__button">
-            Сыграть еще
-          </button>
-        </div>
-      ) : null}
+      {(TOTAL_ATTEMPTS - moves === 0 || matched.length === 8) && (
+        <ModalComponent message={message} gameRestart={gameRestart} />
+      )}
     </div>
   );
 }

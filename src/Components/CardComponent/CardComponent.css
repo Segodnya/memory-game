@@ -1,0 +1,46 @@
+.card {
+  position: relative;
+  width: 115px;
+  height: 115px;
+  cursor: pointer;
+}
+.card__front,
+.card__back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  backface-visibility: hidden;
+}
+.card__back:hover {
+  transform: scale(1.05);
+  background-color: var(--color-accent);
+}
+.card__front {
+  background-color: var(--color-grey);
+}
+.card__back {
+  background-color: var(--color-secondary);
+}
+.card__front {
+  transform: rotateY(180deg);
+}
+.flipped .card__back {
+  transform: rotateY(180deg);
+}
+.flipped .card__front {
+  transform: rotateY(360deg);
+}
+.card_block {
+  position: relative;
+  pointer-events: none;
+  cursor: default;
+}
+.card_hidden {
+  transition: 1s;
+  visibility: hidden;
+}

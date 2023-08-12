@@ -6,8 +6,8 @@ export function ModalComponent({ message, gameRestart }: ModalComponentsProps) {
   return (
     <div className="modal">
       <div className="modal__content">
-        {message.split("\n").map((m) => (
-          <p>{m}</p>
+        {message.split("\n").map((m, i) => (
+          <p key={i}>{m}</p>
         ))}
         <button onClick={gameRestart} className="modal__button">
           Сыграть еще

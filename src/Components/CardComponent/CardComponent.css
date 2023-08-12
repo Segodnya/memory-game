@@ -41,7 +41,6 @@
   cursor: default;
 }
 .card_hidden {
-  transition: 1s;
   visibility: hidden;
 }
 .card__image {

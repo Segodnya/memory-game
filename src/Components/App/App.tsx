@@ -54,7 +54,7 @@ export function App() {
     TOTAL_ATTEMPTS - moves === 0 &&
       setMessage(`Увы, вы проиграли\nУ вас кончились ходы`);
     matched.length === 8 &&
-      setMessage(`Ура, вы выйграли\nЭто заняло ${moves} ${word}`);
+      setMessage(`Ура, вы выиграли\nЭто заняло ${moves} ${word}`);
   }, [matched, moves]);
 
   const gameRestart = () => {

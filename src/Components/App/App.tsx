@@ -23,9 +23,14 @@ export function App() {
 
     if (openCards.length > 1) {
       window.clearTimeout(Number(timeoutId));
+      // "Закрываем" две ранее открытые карточки
+      // если кликнули по третьей до истечения тайм-аута
       setOpenCards([]);
+      // "Открываем" третью подряд кликнутую карточку,
+      // делая ее единственно отображаемой открытой
       setOpenCards((openCard) => [...openCard, index]);
     } else {
+      // Отрабатываем клик по карточке, когда одна уже "открыта"
       setOpenCards((openCard) => [...openCard, index]);
     }
   };

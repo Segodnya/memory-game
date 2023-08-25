@@ -8,6 +8,23 @@ import imgWebpack from "./images/webpack.png";
 import imgWs from "./images/ws.png";
 import { CardType } from "./types";
 
+const preloadImages = (images: string[]) => {
+  images.forEach((src) => {
+    new Image().src = src;
+  });
+};
+
+preloadImages([
+  imgFirebase,
+  imgNginx,
+  imgNode,
+  imgReact,
+  imgRedux,
+  imgTs,
+  imgWebpack,
+  imgWs,
+]);
+
 export const INITIAL_CARDS: CardType[] = [
   { id: 1, img: imgFirebase, stat: "" },
   { id: 2, img: imgNginx, stat: "" },

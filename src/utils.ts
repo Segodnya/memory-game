@@ -19,6 +19,8 @@ export const INITIAL_CARDS: CardType[] = [
   { id: 8, img: imgWs, stat: "" },
 ];
 
+export const INITIAL_DECK: CardType[] = [...INITIAL_CARDS, ...INITIAL_CARDS];
+
 export function shuffleDeck(deck: CardType[]): CardType[] {
   return deck.sort(() => Math.random() - 0.5);
 }

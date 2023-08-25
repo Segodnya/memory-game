@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { CardType } from "../../types";
 import { CardComponent } from "../CardComponent/CardComponent";
 import { ModalComponent } from "../ModalComponent/ModalComponent";
-import { INITIAL_CARDS, changeDeclension, shuffleDeck } from "../../utils";
+import { INITIAL_DECK, changeDeclension, shuffleDeck } from "../../utils";
 import "./App.css";
 
 export function App() {
-  const deck: CardType[] = [...INITIAL_CARDS, ...INITIAL_CARDS];
   const [cards, setCards] = useState<CardType[]>([]);
   const [openCards, setOpenCards] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
@@ -16,7 +15,7 @@ export function App() {
   const TOTAL_ATTEMPTS = 40;
 
   useEffect(() => {
-    setCards(shuffleDeck(deck));
+    setCards(shuffleDeck(INITIAL_DECK));
   }, []);
 
   const flipCard = (index: number): void => {
@@ -61,7 +60,7 @@ export function App() {
     setOpenCards([]);
     setMatched([]);
     setMoves(0);
-    setCards(shuffleDeck(deck));
+    setCards(shuffleDeck(INITIAL_DECK));
   };
 
   return (

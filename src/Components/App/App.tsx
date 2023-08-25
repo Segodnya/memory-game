@@ -11,7 +11,7 @@ export function App() {
   const [matched, setMatched] = useState<number[]>([]);
   const [moves, setMoves] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const [timeoutId, setTimeoutId] = useState<Number | null>(null);
   const TOTAL_ATTEMPTS = 40;
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export function App() {
     if (TOTAL_ATTEMPTS - moves === 0 || matched.length === 8) return;
 
     if (openCards.length > 1) {
-      clearTimeout(Number(timeoutId));
+      window.clearTimeout(Number(timeoutId));
       setOpenCards([]);
       setOpenCards((openCard) => [...openCard, index]);
     } else {
@@ -43,7 +43,7 @@ export function App() {
 
     if (openCards.length === 2) {
       setMoves((moves) => moves + 1);
-      const id = setTimeout(() => setOpenCards([]), 1500);
+      const id = window.setTimeout(() => setOpenCards([]), 1500);
       setTimeoutId(id);
     }
   }, [openCards, cards, clearTimeout, setTimeoutId]);

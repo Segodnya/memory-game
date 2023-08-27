@@ -17,21 +17,33 @@ export function App() {
     setCards(shuffleDeck(INITIAL_DECK));
   }, []);
 
+  // const flipCard = (index: number): void => {
+  //   if (TOTAL_ATTEMPTS - moves === 0 || matched.length === 8) return;
+
+  //   if (openCards.length > 1) {
+  //     window.clearTimeout(Number(timeoutId));
+  //     // "Закрываем" две ранее открытые карточки
+  //     // если кликнули по третьей до истечения тайм-аута
+  //     setOpenCards([]);
+  //     // "Открываем" третью подряд кликнутую карточку,
+  //     // делая ее единственно отображаемой открытой
+  //     setOpenCards((openCard) => [...openCard, index]);
+  //   } else {
+  //     // Отрабатываем клик по карточке, когда одна уже "открыта"
+  //     setOpenCards((openCard) => [...openCard, index]);
+  //   }
+  // };
+
   const flipCard = (index: number): void => {
     if (TOTAL_ATTEMPTS - moves === 0 || matched.length === 8) return;
 
-    if (openCards.length > 1) {
-      window.clearTimeout(Number(timeoutId));
-      // "Закрываем" две ранее открытые карточки
-      // если кликнули по третьей до истечения тайм-аута
-      setOpenCards([]);
-      // "Открываем" третью подряд кликнутую карточку,
-      // делая ее единственно отображаемой открытой
-      setOpenCards((openCard) => [...openCard, index]);
-    } else {
-      // Отрабатываем клик по карточке, когда одна уже "открыта"
-      setOpenCards((openCard) => [...openCard, index]);
-    }
+    const updatedOpenCards =
+      openCards.length > 1
+        ? [...openCards.slice(-1), index]
+        : [...openCards, index];
+
+    window.clearTimeout(Number(timeoutId));
+    setOpenCards(updatedOpenCards);
   };
 
   useEffect(() => {
@@ -51,14 +63,6 @@ export function App() {
       setTimeoutId(id);
     }
   }, [openCards, cards, clearTimeout, setTimeoutId]);
-
-  // useEffect(() => {
-  //   let word = changeDeclension(moves);
-  //   TOTAL_ATTEMPTS - moves === 0 &&
-  //     setMessage(`Увы, вы проиграли\nУ вас кончились ходы`);
-  //   matched.length === 8 &&
-  //     setMessage(`Ура, вы выиграли\nЭто заняло ${moves} ${word}`);
-  // }, [matched, moves]);
 
   const gameRestart = () => {
     setOpenCards([]);

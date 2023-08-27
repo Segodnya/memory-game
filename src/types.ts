@@ -13,6 +13,6 @@ export interface CardComponentProps {
 }
 
 export interface ModalComponentsProps {
-  message: string;
+  children: string;
   gameRestart: () => void;
 }

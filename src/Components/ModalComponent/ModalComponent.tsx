@@ -2,11 +2,14 @@ import React from "react";
 import { ModalComponentsProps } from "../../types";
 import "./ModalComponent.css";
 
-export function ModalComponent({ message, gameRestart }: ModalComponentsProps) {
+export function ModalComponent({
+  children,
+  gameRestart,
+}: ModalComponentsProps) {
   return (
     <div className="modal">
       <div className="modal__content">
-        {message.split("\n").map((m, i) => (
+        {children.split("\n").map((m, i) => (
           <p key={i}>{m}</p>
         ))}
         <button onClick={gameRestart} className="modal__button">

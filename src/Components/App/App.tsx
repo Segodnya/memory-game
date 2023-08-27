@@ -10,7 +10,6 @@ export function App() {
   const [openCards, setOpenCards] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
   const [moves, setMoves] = useState<number>(0);
-  const [message, setMessage] = useState<string>("");
   const [timeoutId, setTimeoutId] = useState<Number | null>(null);
   const TOTAL_ATTEMPTS = 40;
 
@@ -53,13 +52,13 @@ export function App() {
     }
   }, [openCards, cards, clearTimeout, setTimeoutId]);
 
-  useEffect(() => {
-    let word = changeDeclension(moves);
-    TOTAL_ATTEMPTS - moves === 0 &&
-      setMessage(`Увы, вы проиграли\nУ вас кончились ходы`);
-    matched.length === 8 &&
-      setMessage(`Ура, вы выиграли\nЭто заняло ${moves} ${word}`);
-  }, [matched, moves]);
+  // useEffect(() => {
+  //   let word = changeDeclension(moves);
+  //   TOTAL_ATTEMPTS - moves === 0 &&
+  //     setMessage(`Увы, вы проиграли\nУ вас кончились ходы`);
+  //   matched.length === 8 &&
+  //     setMessage(`Ура, вы выиграли\nЭто заняло ${moves} ${word}`);
+  // }, [matched, moves]);
 
   const gameRestart = () => {
     setOpenCards([]);
@@ -95,7 +94,18 @@ export function App() {
         </div>
       </main>
       {(TOTAL_ATTEMPTS - moves === 0 || matched.length === 8) && (
-        <ModalComponent message={message} gameRestart={gameRestart} />
+        <ModalComponent gameRestart={gameRestart}>
+          {(() => {
+            let word = changeDeclension(moves);
+            if (TOTAL_ATTEMPTS - moves === 0) {
+              return `Увы, вы проиграли\nУ вас кончились ходы`;
+            } else if (matched.length === 8) {
+              return `Ура, вы выиграли\nЭто заняло ${moves} ${word}`;
+            } else {
+              return "";
+            }
+          })()}
+        </ModalComponent>
       )}
     </div>
   );

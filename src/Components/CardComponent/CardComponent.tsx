@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import classNames from "classnames";
 import { CardComponentProps } from "../../types";
 import imgBack from "../../images/logo.svg";
 import "./CardComponent.css";
@@ -21,9 +22,11 @@ export function CardComponent({
   return (
     <div
       onClick={() => flipCard(index)}
-      className={`${!isFlipped ? "card" : "flipped card_block"} ${
-        !isVisible ? "card_hidden" : ""
-      }`}
+      className={classNames({
+        card: !isFlipped,
+        "flipped card_block": isFlipped,
+        card_hidden: !isVisible,
+      })}
     >
       <div className="card__front">
         <img className="card__image" src={card.img} alt="card__front" />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { CardType } from "../../types";
 import { CardComponent } from "../CardComponent/CardComponent";
 import { ModalComponent } from "../ModalComponent/ModalComponent";
@@ -10,7 +10,7 @@ export function App() {
   const [openCards, setOpenCards] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
-  const [timeoutId, setTimeoutId] = useState<Number | null>(null);
+  const timeoutId = useRef<number | null>(null);
   const TOTAL_ATTEMPTS = 40;
   const TOTAL_PAIRS = 8;
 
@@ -19,7 +19,7 @@ export function App() {
   }, []);
 
   const flipCard = (index: number): void => {
-    window.clearTimeout(Number(timeoutId));
+    window.clearTimeout(Number(timeoutId.current));
     if (TOTAL_ATTEMPTS - moves === 0 || matched.length === TOTAL_PAIRS) return;
 
     const updatedOpenCards =
@@ -43,10 +43,9 @@ export function App() {
 
     if (openCards.length === 2) {
       setMoves((moves) => moves + 1);
-      const id = window.setTimeout(() => setOpenCards([]), 1500);
-      setTimeoutId(id);
+      timeoutId.current = window.setTimeout(() => setOpenCards([]), 1500);
     }
-  }, [openCards, cards, clearTimeout, setTimeoutId]);
+  }, [openCards, cards, clearTimeout, timeoutId]);
 
   const gameRestart = () => {
     setOpenCards([]);

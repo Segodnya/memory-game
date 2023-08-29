@@ -7,8 +7,8 @@ export interface CardType {
 export interface CardComponentProps {
   card: CardType;
   index: number;
-  openCards: number[];
-  matched: number[];
+  isFlipped: boolean;
+  isVisible: boolean;
   flipCard: (index: number) => void;
 }
 

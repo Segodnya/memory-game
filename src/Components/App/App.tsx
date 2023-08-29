@@ -19,6 +19,7 @@ export function App() {
   }, []);
 
   const flipCard = (index: number): void => {
+    window.clearTimeout(Number(timeoutId));
     if (TOTAL_ATTEMPTS - moves === 0 || matched.length === TOTAL_PAIRS) return;
 
     const updatedOpenCards =
@@ -26,7 +27,6 @@ export function App() {
         ? [...openCards.slice(-1), index]
         : [...openCards, index];
 
-    window.clearTimeout(Number(timeoutId));
     setOpenCards(updatedOpenCards);
   };
 

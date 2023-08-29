@@ -70,8 +70,8 @@ export function App() {
               key={index}
               card={card}
               index={index}
-              openCards={openCards}
-              matched={matched}
+              isFlipped={openCards.includes(index)}
+              isVisible={!matched.includes(card.id)}
               flipCard={flipCard}
             />
           ))}

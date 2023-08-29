@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import classNames from "classnames";
 import { CardComponentProps } from "../../types";
 import imgBack from "../../images/logo.svg";
@@ -6,19 +6,11 @@ import "./CardComponent.css";
 
 export function CardComponent({
   card,
+  isFlipped,
+  isVisible,
   index,
-  openCards,
-  matched,
   flipCard,
 }: CardComponentProps) {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    setIsFlipped(openCards.includes(index));
-    setIsVisible(!matched.includes(card.id));
-  }, [openCards, matched, card.id, index]);
-
   return (
     <div
       onClick={() => flipCard(index)}

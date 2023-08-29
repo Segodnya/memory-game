@@ -9,33 +9,17 @@ export function App() {
   const [cards, setCards] = useState<CardType[]>([]);
   const [openCards, setOpenCards] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
-  const [moves, setMoves] = useState<number>(0);
+  const [moves, setMoves] = useState(0);
   const [timeoutId, setTimeoutId] = useState<Number | null>(null);
   const TOTAL_ATTEMPTS = 40;
+  const TOTAL_PAIRS = 8;
 
   useEffect(() => {
     setCards(shuffleDeck(INITIAL_DECK));
   }, []);
 
-  // const flipCard = (index: number): void => {
-  //   if (TOTAL_ATTEMPTS - moves === 0 || matched.length === 8) return;
-
-  //   if (openCards.length > 1) {
-  //     window.clearTimeout(Number(timeoutId));
-  //     // "Закрываем" две ранее открытые карточки
-  //     // если кликнули по третьей до истечения тайм-аута
-  //     setOpenCards([]);
-  //     // "Открываем" третью подряд кликнутую карточку,
-  //     // делая ее единственно отображаемой открытой
-  //     setOpenCards((openCard) => [...openCard, index]);
-  //   } else {
-  //     // Отрабатываем клик по карточке, когда одна уже "открыта"
-  //     setOpenCards((openCard) => [...openCard, index]);
-  //   }
-  // };
-
   const flipCard = (index: number): void => {
-    if (TOTAL_ATTEMPTS - moves === 0 || matched.length === 8) return;
+    if (TOTAL_ATTEMPTS - moves === 0 || matched.length === TOTAL_PAIRS) return;
 
     const updatedOpenCards =
       openCards.length > 1
@@ -97,13 +81,13 @@ export function App() {
           <span className="App__span">{TOTAL_ATTEMPTS - moves}</span>
         </div>
       </main>
-      {(TOTAL_ATTEMPTS - moves === 0 || matched.length === 8) && (
+      {(TOTAL_ATTEMPTS - moves === 0 || matched.length === TOTAL_PAIRS) && (
         <ModalComponent gameRestart={gameRestart}>
           {(() => {
             let word = changeDeclension(moves);
             if (TOTAL_ATTEMPTS - moves === 0) {
               return `Увы, вы проиграли\nУ вас кончились ходы`;
-            } else if (matched.length === 8) {
+            } else if (matched.length === TOTAL_PAIRS) {
               return `Ура, вы выиграли\nЭто заняло ${moves} ${word}`;
             } else {
               return "";
